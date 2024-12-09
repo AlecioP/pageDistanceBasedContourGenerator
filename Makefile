@@ -3,11 +3,11 @@ OUTPUTFILE_EXTRACT_LINES_V3 = extract_lines
 #--------------------------------------------------------------------------------------
 COMMONDIR = ./
 INSTALLDIR= ../BIN
-AUTO_INCLUDE = `pkg-config --cflags-only-I opencv liblog4cxx eigen3`
-MANUAL_INCLUDE = -I$(COMMONDIR) -I/opt/local/include/
+AUTO_INCLUDE = `pkg-config --cflags-only-I liblog4cxx`
+MANUAL_INCLUDE = -I- -I$(COMMONDIR) -I./Eigen -I./Eigen/src -I./Eigen/src/plugins -I./Eigen/src/Eigenvalues -I/usr/local/include/opencv-2.4.13.4/
 INCLUDE = $(AUTO_INCLUDE) $(MANUAL_INCLUDE)
 
-AUTO_LIBS = `pkg-config liblog4cxx opencv eigen3 --libs`
+AUTO_LIBS = `pkg-config liblog4cxx opencv --libs`
 #MANUAL_LIBS = -lboost_system-mt -lboost_program_options-mt -lboost_filesystem-mt	-lboost_thread-mt
 MANUAL_LIBS = -lboost_system -lboost_program_options -lboost_filesystem	-lboost_thread -lboost_regex
 EXTERNAL_LIBS = $(AUTO_LIBS) $(MANUAL_LIBS)
@@ -64,6 +64,9 @@ algorithm_otsu.o: algorithm_otsu.cc algorithm_otsu.hpp
 algorithm_sauvola.o: algorithm_sauvola.cc algorithm_sauvola.hpp
 	$(CXX) $(OPTIONS) $@ $< $(INCLUDE)
 
+algorithm_rlsa.o: algorithm_rlsa.cc algorithm_rlsa.hpp
+	$(CXX) $(OPTIONS) $@ $< $(INCLUDE)
+
 algorithm_dp_path_finder.o: algorithm_dp_path_finder.cc algorithm_dp_path_finder.hpp image.hpp
 	$(CXX) $(OPTIONS) $@ $< $(INCLUDE)
 
@@ -71,6 +74,9 @@ line_region_list.o: line_region_list.cc line_region_list.hpp
 	$(CXX) $(OPTIONS) $@ $< $(INCLUDE)
 
 pugixml.o: pugixml.cpp pugixml.hpp pugiconfig.hpp
+	$(CXX) $(OPTIONS) $@ $< $(INCLUDE)
+
+points_file.o: points_file.cc points_file.hpp
 	$(CXX) $(OPTIONS) $@ $< $(INCLUDE)
 
 page_file.o: page_file.cc page_file.hpp pugixml.hpp line_region_list.hpp algorithm_sauvola.hpp
